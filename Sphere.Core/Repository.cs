@@ -13,6 +13,7 @@ namespace Sphere.Core
         T Get(Func<T, bool> condition);
         IQueryable<T> GetAll();
         IQueryable<T> Find(Func<T, bool> condition);
+        T FindSingle(Func<T, bool> condition);
 
         void Exec(string query, params SqlParameter[] sqlParameters);
         IQueryable<TEntity> Run<TEntity>(string query, params SqlParameter[] sqlParameters);

@@ -49,6 +49,11 @@ namespace Sphere.Core
             return entities.AsQueryable();
         }
 
+        T Repository<T>.FindSingle(Func<T, bool> condition)
+        {
+            return context.Set<T>().FirstOrDefault(condition);
+        }
+
         public void Exec(string query, params SqlParameter[] sqlParameters)
         {
             if (sqlParameters != null)
@@ -72,6 +77,6 @@ namespace Sphere.Core
                 return context.Database.SqlQuery<TEntity>(query).AsQueryable();
             }
             
-        }       
+        }
     }
 }
