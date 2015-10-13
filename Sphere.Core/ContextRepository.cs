@@ -25,6 +25,12 @@ namespace Sphere.Core
             throw new NotImplementedException();
         }
 
+        public void Update(T entity)
+        {
+            context.Entry<T>(entity).State = EntityState.Modified;
+            context.SaveChanges();
+        }
+
         public void Exec(string query, params SqlParameter[] sqlParameters)
         {
             throw new NotImplementedException();
@@ -37,22 +43,17 @@ namespace Sphere.Core
 
         public T Get(Func<T, bool> condition)
         {
-            throw new NotImplementedException();
+            return context.Set<T>().FirstOrDefault(condition);
         }
 
         public IQueryable<T> GetAll()
         {
-            throw new NotImplementedException();
+            return context.Set<T>().AsQueryable();
         }
 
         public TEntity Run<TEntity>(string query, params SqlParameter[] sqlParameters)
         {
             throw new NotImplementedException();
-        }
-
-        public void Update(T entity)
-        {
-            throw new NotImplementedException();
-        }
+        }       
     }
 }

@@ -1,2 +1,5 @@
 *.nupkg
 packages/
+Sphere.Core/bin/
+Sphere.Core/obj/Debug/Sphere.Core.csproj.FileListAbsolute.txt
+Sphere.Core/obj/
