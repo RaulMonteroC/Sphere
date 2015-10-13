@@ -20,6 +20,12 @@ namespace Sphere.Test.Unit
             repository = new FakeRepository<Person>();
             fakePerson = LoadEntityData();
         }
+        [TearDown]
+        public void TearDown()
+        {
+            repository.Delete(m => m.Id >= 0);
+        }
+
 
         [Test]
         public void AddEntity()

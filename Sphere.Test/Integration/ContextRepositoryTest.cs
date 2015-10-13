@@ -15,7 +15,7 @@ namespace Sphere.Test.Integration
         [SetUp]
         public void SetUp()
         {
-            repository = new ContextRepository<Person>(new FakeContext());
+            repository = ContextRepository<Person>.CreateUsingNewContext(new FakeContext());
             mockPerson = LoadEntityData();
         }
 
@@ -24,6 +24,25 @@ namespace Sphere.Test.Integration
         {
             var query = "truncate table people";
             repository.Exec(query, null);
+        }
+
+        [Test]
+        public void CreateRepositoryFromGlobalContext()
+        {
+            var repo = ContextRepository<Person>.CreateUsingNewContext(new FakeContext());
+
+            Assert.NotNull(repo);
+            Assert.AreEqual(typeof(ContextRepository<Person>),repo.GetType());
+        }
+
+        [Test]
+        public void CreateRepositoryFromNewContext()
+        {
+            SphereConfig.GlobalContext = new FakeContext();
+            var repo = ContextRepository<Person>.CreateUsingGlobalContext();
+
+            Assert.NotNull(repo);
+            Assert.AreEqual(typeof(ContextRepository<Person>), repo.GetType());
         }
 
         [Test]
