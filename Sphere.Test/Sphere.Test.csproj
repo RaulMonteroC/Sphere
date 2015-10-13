@@ -58,6 +58,7 @@
     <Compile Include="FakeDb\Person.cs" />
     <Compile Include="Integration\ContextRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Unit\FakeRepositoryTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
