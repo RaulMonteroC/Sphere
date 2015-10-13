@@ -22,24 +22,16 @@ namespace Sphere.Core
 
         public void Delete(Func<T, bool> condition)
         {
-            throw new NotImplementedException();
+            var entity = Get(condition);
+            context.Set<T>().Remove(entity);
+            context.SaveChanges();
         }
 
         public void Update(T entity)
         {
             context.Entry<T>(entity).State = EntityState.Modified;
             context.SaveChanges();
-        }
-
-        public void Exec(string query, params SqlParameter[] sqlParameters)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IQueryable<T> Find(Func<T, bool> condition)
-        {
-            throw new NotImplementedException();
-        }
+        }        
 
         public T Get(Func<T, bool> condition)
         {
@@ -51,9 +43,35 @@ namespace Sphere.Core
             return context.Set<T>().AsQueryable();
         }
 
-        public TEntity Run<TEntity>(string query, params SqlParameter[] sqlParameters)
+        public IQueryable<T> Find(Func<T, bool> condition)
         {
-            throw new NotImplementedException();
+            var entities = context.Set<T>().Where(condition);
+            return entities.AsQueryable();
+        }
+
+        public void Exec(string query, params SqlParameter[] sqlParameters)
+        {
+            if (sqlParameters != null)
+            {
+                context.Database.ExecuteSqlCommand(query,sqlParameters);
+            }
+            else
+            {
+                context.Database.ExecuteSqlCommand(query);
+            }
+        }
+
+        public IQueryable<TEntity> Run<TEntity>(string query, params SqlParameter[] sqlParameters)
+        {
+            if(sqlParameters != null)
+            {
+                return context.Database.SqlQuery<TEntity>(query,sqlParameters).AsQueryable();
+            }
+            else
+            {
+                return context.Database.SqlQuery<TEntity>(query).AsQueryable();
+            }
+            
         }       
     }
 }

@@ -10,25 +10,33 @@ namespace Sphere.Test.Integration
     public class ContextRepositoryTest
     {
         private Repository<Person> repository;
-        private Person person;
+        private Person mockPerson;
 
         [SetUp]
         public void SetUp()
         {
             repository = new ContextRepository<Person>(new FakeContext());
-            person = LoadEntityData();
+            mockPerson = LoadEntityData();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            var query = "truncate table people";
+            repository.Exec(query, null);
         }
 
         [Test]
         public void CreateEntity()
         {
-            repository.Add(person);
-            Assert.AreNotEqual(0, person.Id);
+            repository.Add(mockPerson);
+            Assert.AreNotEqual(0, mockPerson.Id);
         }
 
         [Test]
         public void UpdateEntity()
         {
+            repository.Add(mockPerson);
             var existingPerson = repository.GetAll().FirstOrDefault();
             var previousName = existingPerson.Name;
 
@@ -39,8 +47,33 @@ namespace Sphere.Test.Integration
         }
 
         [Test]
+        public void DeleteEntity()
+        {
+            repository.Add(mockPerson);
+            var people = repository.GetAll();
+            var total = people != null ? people.Count() : 0;
+
+            var person = repository.GetAll().FirstOrDefault();
+            repository.Delete(m => m.Id == person.Id);
+
+            var totalAfterDelete = repository.GetAll() != null ? repository.GetAll().Count() : 0;
+
+            Assert.AreNotEqual(total, totalAfterDelete);
+        }
+
+        [Test]
+        public void FindEntity()
+        {
+            repository.Add(mockPerson);
+            var jhons = repository.Find(m => m.Name.Contains("Jhon"));
+
+            Assert.Greater(jhons.Count(), 0);
+        }
+
+        [Test]
         public void GetAllEntities()
         {
+            repository.Add(mockPerson);
             var people = repository.GetAll();
 
             Assert.Greater(people.Count(), 0); 
@@ -49,9 +82,30 @@ namespace Sphere.Test.Integration
         [Test]
         public void GetEntity()
         {
-            var person = repository.Get(m => m.Name == "Jhon");
+            repository.Add(mockPerson);
+            var personFromDb = repository.Get(m => m.Name == "Jhon");
 
-            Assert.NotNull(person);
+            Assert.NotNull(personFromDb);
+        }
+
+        [Test]
+        public void ExecActionQuery()
+        {
+            var query = "insert into people values('test','test',getDate(),'test@somewhere.com')";
+            var total = repository.GetAll() != null ? repository.GetAll().Count() : 0;
+            repository.Exec(query, null);
+
+            var totalAfterInsert = repository.GetAll() != null ? repository.GetAll().Count() : 0;
+
+            Assert.Greater(totalAfterInsert, total);
+        }
+
+        [Test]
+        public void RunSql()
+        {
+            repository.Add(mockPerson);
+            var query = "select top 5 name from people";
+            repository.Run<string>(query);
         }
 
         private Person LoadEntityData()

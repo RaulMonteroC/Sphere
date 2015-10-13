@@ -15,6 +15,6 @@ namespace Sphere.Core
         IQueryable<T> Find(Func<T, bool> condition);
 
         void Exec(string query, params SqlParameter[] sqlParameters);
-        TEntity Run<TEntity>(string query, params SqlParameter[] sqlParameters);
+        IQueryable<TEntity> Run<TEntity>(string query, params SqlParameter[] sqlParameters);
     }
 }
