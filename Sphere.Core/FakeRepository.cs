@@ -46,11 +46,6 @@ namespace Sphere.Core
             return storage.Where(condition).AsQueryable();
         }
 
-        public T FindSingle(Func<T, bool> condition)
-        {
-            return storage.FirstOrDefault(condition);
-        }
-
         public void Exec(string query, params System.Data.SqlClient.SqlParameter[] sqlParameters)
         {
             

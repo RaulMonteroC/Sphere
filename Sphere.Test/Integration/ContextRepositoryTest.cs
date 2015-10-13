@@ -71,15 +71,6 @@ namespace Sphere.Test.Integration
         }
 
         [Test]
-        public void FindSingleEntity()
-        {
-            repository.Add(mockPerson);
-            var jhon = repository.FindSingle(m => m.Name.Contains("Jhon"));
-
-            Assert.NotNull(jhon);
-        }
-
-        [Test]
         public void GetAllEntities()
         {
             repository.Add(mockPerson);
