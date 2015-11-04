@@ -15,7 +15,7 @@ namespace Sphere.Test.Integration
         [SetUp]
         public void SetUp()
         {
-            repository = ContextRepository<Person>.CreateUsingNewContext(new FakeContext());
+            repository = new ContextRepository<Person>(new FakeContext());
             mockPerson = LoadEntityData();
         }
 
@@ -39,7 +39,7 @@ namespace Sphere.Test.Integration
         public void CreateRepositoryFromNewContext()
         {
             SphereConfig.GlobalContext = new FakeContext();
-            var repo = new ContextRepository<Person>.CreateUsingGlobalContext();
+            var repo = new ContextRepository<Person>();
 
             Assert.NotNull(repo);
             Assert.AreEqual(typeof(ContextRepository<Person>), repo.GetType());
