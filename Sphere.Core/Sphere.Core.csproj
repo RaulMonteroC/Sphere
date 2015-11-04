@@ -51,10 +51,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContextRepository.cs" />
-    <Compile Include="ContextRepositoryFactory.cs" />
     <Compile Include="FakeRepository.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SphereConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

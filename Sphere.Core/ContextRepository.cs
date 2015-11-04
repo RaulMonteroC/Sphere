@@ -9,19 +9,14 @@ namespace Sphere.Core
     {
         private DbContext context;
 
-        private ContextRepository(DbContext context)
+        public ContextRepository(DbContext context)
         {
             this.context = context;
         }
 
-        public static ContextRepository<T> CreateUsingGlobalContext()
+        public ContextRepository()
         {
-            return new ContextRepository<T>(SphereConfig.GlobalContext);
-        }
-
-        public static ContextRepository<T> CreateUsingNewContext(DbContext context)
-        {
-            return new ContextRepository<T>(context);
+            this.context = SphereConfig.GlobalContext;
         }
 
         public void Add(T entity)
