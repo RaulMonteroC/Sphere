@@ -29,7 +29,7 @@ namespace Sphere.Test.Integration
         [Test]
         public void CreateRepositoryFromGlobalContext()
         {
-            var repo = ContextRepository<Person>.CreateUsingNewContext(new FakeContext());
+            var repo = new ContextRepository<Person>(new FakeContext());
 
             Assert.NotNull(repo);
             Assert.AreEqual(typeof(ContextRepository<Person>),repo.GetType());
@@ -39,7 +39,7 @@ namespace Sphere.Test.Integration
         public void CreateRepositoryFromNewContext()
         {
             SphereConfig.GlobalContext = new FakeContext();
-            var repo = ContextRepository<Person>.CreateUsingGlobalContext();
+            var repo = new ContextRepository<Person>.CreateUsingGlobalContext();
 
             Assert.NotNull(repo);
             Assert.AreEqual(typeof(ContextRepository<Person>), repo.GetType());
