@@ -13,11 +13,18 @@ namespace Sphere.Core
     {
         private DbContext context;
 
+        /// <summary>
+        /// Creates an instance of ContextRepository with a given DbContext instance
+        /// </summary>
+        /// <param name="context"></param>
         public ContextRepository(DbContext context)
         {
             this.context = context;
         }
-
+        /// <summary>
+        /// Creates an instance of ContextRepository using the GlobalContext property in SphereConfig
+        /// as the DbContext instance.
+        /// </summary>
         public ContextRepository()
         {
             this.context = SphereConfig.GlobalContext;
