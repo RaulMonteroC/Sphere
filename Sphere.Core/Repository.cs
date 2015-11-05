@@ -4,6 +4,10 @@ using System.Linq;
 
 namespace Sphere.Core
 {
+    /// <summary>
+    /// Abstraction that defines all avialable operations using a repository.
+    /// </summary>
+    /// <typeparam name="T">Entity type</typeparam>
     public interface Repository<T> where T : class
     {
         void Add(T entity);

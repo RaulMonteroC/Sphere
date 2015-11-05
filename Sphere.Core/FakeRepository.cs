@@ -5,6 +5,10 @@ using System.Text;
 
 namespace Sphere.Core
 {
+    /// <summary>
+    /// Mock repository implementation using in-memory collection only to be use in unit testing.
+    /// </summary>
+    /// <typeparam name="T">Entity type</typeparam>
     public class FakeRepository<T> : Repository<T> where T : class
     {
         private ICollection<T> storage;
